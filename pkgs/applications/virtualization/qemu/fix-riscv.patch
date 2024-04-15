@@ -1,0 +1,12 @@
+#if defined(TARGET_RISCV64)
+# define TASK_UNMAPPED_BASE TARGET_PAGE_ALIGN((1ull << 38) / 3)
+# ifdef TARGET_ABI32
+#  define ELF_ET_DYN_BASE ((((0x80000000ull - (1ull << TARGET_PAGE_BITS)) / 3) * 2)
+# else
+#  define ELF_ET_DYN_BASE (((1ull << 38) / 3) * 2)
+# endif
+#elif defined(TARGET_RISCV32)
+# define TASK_UNMAPPED_BASE TARGET_PAGE_ALIGN(0x9FC00000ull / 3)
+# define ELF_ET_DYN_BASE    ((0x9FC00000ull / 3) * 2)
+#endif
+

@@ -168,6 +168,8 @@ stdenv.mkDerivation (finalAttrs: {
   # interfering with the feature check.
   env.NIX_CFLAGS_COMPILE = "-Wno-unused-command-line-argument";
 
+  env.NIX_LDFLAGS = lib.optionals (stdenv.system == "riscv64-linux") "-latomic";
+
   # make install attempts to use the just-built cmake
   preInstall = lib.optionalString (stdenv.hostPlatform != stdenv.buildPlatform) ''
     sed -i 's|bin/cmake|${buildPackages.cmakeMinimal}/bin/cmake|g' Makefile
